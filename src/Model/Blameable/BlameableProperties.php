@@ -34,5 +34,5 @@ trait BlameableProperties
      * Will be mapped to either string or user entity
      * by BlameableSubscriber
      */
-    protected $deletedBy;
+//    protected $deletedBy;
 }

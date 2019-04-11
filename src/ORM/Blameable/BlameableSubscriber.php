@@ -105,13 +105,13 @@ class BlameableSubscriber extends AbstractSubscriber
             ]);
         }
 
-        if (!$classMetadata->hasField('deletedBy')) {
-            $classMetadata->mapField([
-                'fieldName'  => 'deletedBy',
-                'type'       => 'string',
-                'nullable'   => true,
-            ]);
-        }
+//        if (!$classMetadata->hasField('deletedBy')) {
+//            $classMetadata->mapField([
+//                'fieldName'  => 'deletedBy',
+//                'type'       => 'string',
+//                'nullable'   => true,
+//            ]);
+//        }
     }
 
     private function mapManyToOneUser(classMetadata $classMetadata)
@@ -134,15 +134,15 @@ class BlameableSubscriber extends AbstractSubscriber
                 ))
             ]);
         }
-        if (!$classMetadata->hasAssociation('deletedBy')) {
-            $classMetadata->mapManyToOne([
-                'fieldName'    => 'deletedBy',
-                'targetEntity' => $this->userEntity,
-                'joinColumns'  => array(array(
-                    'onDelete'             => 'SET NULL'
-                ))
-            ]);
-        }
+//        if (!$classMetadata->hasAssociation('deletedBy')) {
+//            $classMetadata->mapManyToOne([
+//                'fieldName'    => 'deletedBy',
+//                'targetEntity' => $this->userEntity,
+//                'joinColumns'  => array(array(
+//                    'onDelete'             => 'SET NULL'
+//                ))
+//            ]);
+//        }
     }
 
     /**
@@ -233,29 +233,29 @@ class BlameableSubscriber extends AbstractSubscriber
      *
      * @param LifecycleEventArgs $eventArgs
      */
-    public function preRemove(LifecycleEventArgs $eventArgs)
-    {
-        $em = $eventArgs->getEntityManager();
-        $uow = $em->getUnitOfWork();
-        $entity = $eventArgs->getEntity();
-
-        $classMetadata = $em->getClassMetadata(get_class($entity));
-        if ($this->isBlameable($classMetadata)) {
-            if (!$entity->isBlameable()) {
-                return;
-            }
-            $user = $this->getUser();
-            if ($this->isValidUser($user)) {
-                $oldValue = $entity->getDeletedBy();
-                $entity->setDeletedBy($user);
-                $uow->propertyChanged($entity, 'deletedBy', $oldValue, $user);
-
-                $uow->scheduleExtraUpdate($entity, [
-                    'deletedBy' => [$oldValue, $user],
-                ]);
-            }
-        }
-    }
+//    public function preRemove(LifecycleEventArgs $eventArgs)
+//    {
+//        $em = $eventArgs->getEntityManager();
+//        $uow = $em->getUnitOfWork();
+//        $entity = $eventArgs->getEntity();
+//
+//        $classMetadata = $em->getClassMetadata(get_class($entity));
+//        if ($this->isBlameable($classMetadata)) {
+//            if (!$entity->isBlameable()) {
+//                return;
+//            }
+//            $user = $this->getUser();
+//            if ($this->isValidUser($user)) {
+//                $oldValue = $entity->getDeletedBy();
+//                $entity->setDeletedBy($user);
+//                $uow->propertyChanged($entity, 'deletedBy', $oldValue, $user);
+//
+//                $uow->scheduleExtraUpdate($entity, [
+//                    'deletedBy' => [$oldValue, $user],
+//                ]);
+//            }
+//        }
+//    }
 
     /**
      * set a custome representation of current user
