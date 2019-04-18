@@ -291,7 +291,7 @@ class BlameableSubscriber extends AbstractSubscriber
         $events = [
             Events::prePersist,
             Events::preUpdate,
-            Events::preRemove,
+//            Events::preRemove,
             Events::loadClassMetadata,
         ];
 
